@@ -9,7 +9,7 @@
           %h3 
             = @video.title
           %span 
-            Rating: #{@video.average_rating} / 5
+            Rating: #{@video.decorator.average_rating} / 5
         %p 
           = @video.description
         .actions

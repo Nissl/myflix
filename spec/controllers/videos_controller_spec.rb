@@ -11,6 +11,11 @@ describe VideosController do
         expect(assigns(:video)).to eq(video)
       end
 
+      it "decorates the @video variable" do
+        get :show, id: video.id
+        expect(assigns(:video)).to be_decorated_with VideoDecorator
+      end
+
       context "no reviews" do
         it "sets the @reviews variable to an empty array" do
           get :show, id: video.id

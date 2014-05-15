@@ -1,10 +1,12 @@
 class VideosController < AuthenticatedController
+  #decorates_assigned :video
+
   def index
     @categories = Category.all
   end
 
   def show
-    @video = Video.find(params[:id])
+    @video = Video.find(params[:id]).decorate
     @review = Review.new
     @reviews = @video.reviews
   end
