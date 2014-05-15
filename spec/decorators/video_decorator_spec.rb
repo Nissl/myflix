@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe VideoDecorator do
-  describe "average_rating" do
+  describe "#average_rating" do
     context "no ratings exist" do
       it "returns '-' if no ratings exist" do
         video = Fabricate(:video).decorate
-        expect(video.average_rating).to eq('-')
+        expect(video.average_rating).to eq('N/A')
       end
     end
 
@@ -14,7 +14,7 @@ describe VideoDecorator do
         video = Fabricate(:video).decorate
         rating = rand(1..5).to_f
         review = Fabricate(:review, rating: rating, video_id: Video.first.id)
-        expect(video.average_rating).to eq(rating.to_s)
+        expect(video.average_rating).to eq("#{rating.to_s} / 5")
       end
     end
 
@@ -29,7 +29,7 @@ describe VideoDecorator do
           user_id += 1
           sum += rating
         end
-        expect(video.average_rating).to eq((sum / review_count).round(1).to_s)
+        expect(video.average_rating).to eq("#{(sum / review_count).round(1).to_s} / 5")
       end
     end
   end

@@ -6,7 +6,7 @@ class VideoDecorator < ApplicationDecorator
   end
 
   def average_rating
-    return '-' if object.reviews.count == 0
-    object.reviews.average(:rating).round(1).to_s
+    return 'N/A' if object.reviews.count == 0
+    "#{object.reviews.average(:rating).round(1).to_s} / 5"
   end
 end
