@@ -23,8 +23,7 @@ def sign_in_user(a_user=nil)
 end
 
 def sign_out_user(user)
-  visit home_path
-  click_link "Sign Out"
+  visit logout_path
 end
 
 def create_queue_items
@@ -50,4 +49,12 @@ end
 
 def queue_item(id)
   QueueItem.find(id)
+end
+
+def confirm_user_registered(user)
+  expect(page).to have_content("Welcome, #{user.full_name}")
+end
+
+def confirm_user_not_registered
+  expect(page).to have_content("Something was wrong with the email or password you entered. Please try again.")
 end
