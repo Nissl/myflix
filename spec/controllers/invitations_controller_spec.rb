@@ -20,15 +20,15 @@ describe InvitationsController do
   describe "POST create" do
     context "user authenticated" do
       context "valid_input" do
-        around { ActionMailer::Base.deliveries.clear }
+        after { ActionMailer::Base.deliveries.clear }
 
         it "sets a success flash message" do
           alice = Fabricate(:user)
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
           post :create, invitation: invitation.attributes
-          expect(flash[:success]).to eq("Your invitation has been emailed to 
-                                         #{invitation.recipient_name}")
+          expect(flash[:success]).to eq("Your invitation has been emailed to " +  
+                                        "#{invitation.recipient_name}")
         end 
 
         it "redirects to the invitation page" do
@@ -36,7 +36,7 @@ describe InvitationsController do
           set_current_user(alice)
           invitation = Fabricate.build(:invitation)
           post :create, invitation: invitation.attributes
-          expect(response).to redirect_to home_path
+          expect(response).to redirect_to new_invitation_path
         end
 
         it "saves the invitation to the database" do
@@ -84,7 +84,7 @@ describe InvitationsController do
       end
 
       context "invalid input" do
-        around { ActionMailer::Base.deliveries.clear }
+        after { ActionMailer::Base.deliveries.clear }
         
         it "renders the new invitation page again" do
           alice = Fabricate(:user)
@@ -117,8 +117,8 @@ describe InvitationsController do
           set_current_user(alice)
           bad_invitation = Fabricate.build(:bad_invitation)
           post :create, invitation: bad_invitation.attributes
-          expect(assigns(:invitation)).to eq(bad_invitation.merge!(inviter_id: 
-                                                                   alice.id))
+          expect(assigns(:invitation)).to be_instance_of(Invitation)
+          expect(assigns(:invitation)).to_not be_valid
         end
       end
     end
