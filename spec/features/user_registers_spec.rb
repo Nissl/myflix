@@ -12,6 +12,7 @@ feature 'User registers', { js: true, vcr: true } do
     confirm_successful_registration(alice)
     sign_in_user(alice)
     confirm_user_registered(alice)
+    clear_emails
   end
 
   scenario 'with valid personal info and invalid card' do

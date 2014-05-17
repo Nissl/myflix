@@ -15,7 +15,7 @@ describe ForgotPasswordsController do
     end
 
     context "email in system" do
-      around { ActionMailer::Base.deliveries.clear }
+      after { ActionMailer::Base.deliveries.clear }
 
       it "shows confirm password reset page" do
         alice = Fabricate(:user)
@@ -40,7 +40,7 @@ describe ForgotPasswordsController do
         alice = Fabricate(:user)
         post :create, email: alice.email
         message = ActionMailer::Base.deliveries.last
-        expect(message.body).to include("<a href=\"http://localhost:3000/password_resets/#{alice.token}\">Reset Password</a>")
+        expect(message.body).to include("<a href=\"http://localhost:7000/password_resets/#{alice.token}\">Reset Password</a>")
       end
     end
 
