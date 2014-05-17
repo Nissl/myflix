@@ -41,20 +41,16 @@ describe UsersController do
 
   describe "POST create", js: true do
     context "personal information is valid" do
-      it "delegates to user registration to register user" do
-        registration = double(:registration)
-        charge = double(:charge, successful?: true)
-        registration.stub(:charge).and_return(charge)
-        UserRegistration.should_receive(:create).and_return(registration)
+      it "delegates the user registration to UserRegistration service object" do
+        registration = double(:registration, successful?: true)
+        UserRegistration.any_instance.should_receive(:register_user).and_return(registration)
         post :create, user: Fabricate.attributes_for(:user)
       end
 
-      context "card is valid" do
+      context "registration is valid" do
         before do
-          registration = double(:registration)
-          charge = double(:charge, successful?: true)
-          registration.stub(:charge).and_return(charge)
-          UserRegistration.stub(:create).and_return(registration)
+          registration = double(:registration, successful?: true)
+          UserRegistration.any_instance.stub(:register_user).and_return(registration)
         end
 
         it "sets a flash success message" do
@@ -68,12 +64,12 @@ describe UsersController do
         end
       end
 
-      context "card is invalid" do
+      context "registration is invalid" do
         before do
-          registration = double(:registration)
-          charge = double(:charge, successful?: false, error_message: "Your card was declined.")
-          registration.stub(:charge).and_return(charge)
-          UserRegistration.stub(:create).and_return(registration)
+          registration = double(:registration, 
+                                successful?: false, 
+                                error_message: "Your card was declined.")
+          UserRegistration.any_instance.stub(:register_user).and_return(registration)
         end
 
         it "sets a flash danger message" do
@@ -85,33 +81,6 @@ describe UsersController do
           post :create, user: Fabricate.attributes_for(:user)
           expect(response).to render_template :new
         end
-      end
-    end
-
-    context "personal information is not valid" do
-      before { post :create, user: Fabricate.attributes_for(:user, password: "") }
-      
-      it "does not save the user" do
-        expect(assigns(:user)).to_not be_valid
-        expect(assigns(:user).save).to be_false
-        expect(User.count).to eq(0)
-      end
-
-      it "does not charge the card" do
-        StripeWrapper::Charge.should_not_receive(:create)
-      end
-
-      it "sets @user" do
-        expect(assigns(:user)).to be_instance_of(User)
-      end
-
-      it "does not send an email" do
-        post :create, user: { email: 'baduser@example.com' }
-        expect(ActionMailer::Base.deliveries).to be_empty
-      end
-
-      it "renders :new template" do
-        expect(response).to render_template :new
       end
     end
   end

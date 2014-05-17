@@ -15,21 +15,16 @@ before_action :require_user, only: [:show]
     else
       redirect_to expired_token_path
     end
-    
   end
 
   def create
     @user = User.new(user_params)
-    if @user.valid?
-      registration = UserRegistration.create(@user, params)
-      if registration.charge.successful?
-        flash[:success] = "You registered! Welcome, #{params[:user][:full_name]}!"
-        redirect_to login_path
-      else
-        flash[:danger] = registration.charge.error_message
-        render :new
-      end
+    registration = UserRegistration.new(@user).register_user(params)
+    if registration.successful?
+      flash[:success] = "You registered! Welcome, #{@user.full_name}!"
+      redirect_to login_path
     else
+      flash[:danger] = registration.error_message
       render :new
     end
   end
