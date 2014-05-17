@@ -13,7 +13,7 @@ describe UserRegistration do
       it "creates a new user" do
         alice = Fabricate.build(:user)
         UserRegistration.new(alice).register_user({stripeToken: "123"})
-        expect(alice.save).to be_true
+        expect(User.count).to eq(1)
       end
 
       it "makes the user follow the inviter, if invited" do
@@ -24,7 +24,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                   stripeToken: "123"})
+                                                 stripeToken: "123"})
         expect(bob.follows?(alice)).to be_true
       end 
 
@@ -48,7 +48,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                   stripeToken: "123"})
+                                                 stripeToken: "123"})
         expect(invitation.reload.token).to be_nil
       end
 
