@@ -1,7 +1,7 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 preload_app true
 
-if ENV["RAILS_ENV"] == "test"
+if ENV['RAILS_ENV'] == "test"
   timeout 10000
 else
   timeout 15

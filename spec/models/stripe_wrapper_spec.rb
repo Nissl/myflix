@@ -38,4 +38,45 @@ describe StripeWrapper, vcr: true do
       end
     end
   end
+
+  describe StripeWrapper::Customer do
+    describe ".create" do
+      let(:token) do
+        Stripe::Token.create(
+          :card => {
+            :number => card_number,
+            :exp_month => 3,
+            :exp_year => 2020,
+            :cvc => 314
+          }
+        ).id
+      end
+
+      context "with valid card" do
+        let(:card_number) { '4242424242424242' }
+        
+        it "charges the card successfully" do
+          alice = Fabricate.build(:user)
+          customer = StripeWrapper::Customer.create(amount: 300, card: token, user: alice)
+          expect(customer.created?).to be_true
+        end
+      end
+
+      context "with invalid card" do
+        let(:card_number) { '4000000000000002' }
+
+        it "does not create the customer" do
+          alice = Fabricate.build(:user)
+          customer = StripeWrapper::Customer.create(amount: 300, card: token, user: alice)
+          expect(customer.created?).to_not be_true
+        end
+
+        it "contains an error message" do
+          alice = Fabricate.build(:user)
+          customer = StripeWrapper::Customer.create(amount: 300, card: token, user: alice)
+          expect(customer.error_message).to eq('Your card was declined.')
+        end
+      end
+    end
+  end
 end

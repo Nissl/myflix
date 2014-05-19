@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-before_action :require_user, only: [:show]
+  before_action :require_user, only: [:show]
 
   def new
     @user = User.new
@@ -19,7 +19,7 @@ before_action :require_user, only: [:show]
 
   def create
     @user = User.new(user_params)
-    registration = UserRegistration.new(@user).register_user(params)
+    registration = UserRegistration.new(@user).subscribe_user(params)
     if registration.successful?
       flash[:success] = "You registered! Welcome, #{@user.full_name}!"
       redirect_to login_path
