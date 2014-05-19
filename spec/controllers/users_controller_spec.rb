@@ -43,14 +43,14 @@ describe UsersController do
     context "personal information is valid" do
       it "delegates the user registration to UserRegistration service object" do
         registration = double(:registration, successful?: true)
-        UserRegistration.any_instance.should_receive(:subscribe_user).and_return(registration)
+        UserRegistration.any_instance.should_receive(:register_user).and_return(registration)
         post :create, user: Fabricate.attributes_for(:user)
       end
 
       context "registration is valid" do
         before do
           registration = double(:registration, successful?: true)
-          UserRegistration.any_instance.stub(:subscribe_user).and_return(registration)
+          UserRegistration.any_instance.stub(:register_user).and_return(registration)
         end
 
         it "sets a flash success message" do
@@ -69,7 +69,7 @@ describe UsersController do
           registration = double(:registration, 
                                 successful?: false, 
                                 error_message: "Your card was declined.")
-          UserRegistration.any_instance.stub(:subscribe_user).and_return(registration)
+          UserRegistration.any_instance.stub(:register_user).and_return(registration)
         end
 
         it "sets a flash danger message" do

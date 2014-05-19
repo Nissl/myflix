@@ -7,36 +7,14 @@ class UserRegistration
   def register_user(params)
     if @user.valid?
       Stripe.api_key = ENV["STRIPE_API_KEY"]
-      charge = StripeWrapper::Charge.create(
-        :amount => 999,
-        :card => params[:stripeToken],
-        :description => "Sign up charge for #{@user.email}"
-      )
-      if charge.successful?
-        @user.save
-        handle_invitation(params[:invitation_token])
-        AppMailer.registration_email(@user).deliver
-        @status = :success
-      else
-        @error_message = charge.error_message
-      end
-    else
-      @error_message = "Please correct the following errors:"
-    end
-    self
-  end
-
-  def subscribe_user(params)
-    if @user.valid?
-      Stripe.api_key = ENV["STRIPE_API_KEY"]
       customer = StripeWrapper::Customer.create(
         :card => params[:stripeToken],
         :description => "Sign up charge for #{@user.email}",
         :user => @user
       )
       if customer.created?
+        @user.customer_id = customer.stripe_id
         @user.save
-        @user.update_column(:customer_id, customer.stripe_id)
         handle_invitation(params[:invitation_token])
         AppMailer.registration_email(@user).deliver
         @status = :success
