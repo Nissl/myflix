@@ -6,7 +6,7 @@ describe UserRegistration do
     
     context "card is valid" do
       before do
-        customer = double(:customer, created?: true, stripe_id: "cus_443JMS8lUF8TE8")
+        customer = double(:customer, created?: true, customer_token: "cus_443JMS8lUF8TE8")
         StripeWrapper::Customer.stub(:create).and_return(customer)
       end
 
@@ -16,10 +16,10 @@ describe UserRegistration do
         expect(User.count).to eq(1)
       end
 
-      it "saves the user's Stripe customer id" do
+      it "saves the user's Stripe customer token" do
         alice = Fabricate.build(:user)
         UserRegistration.new(alice).register_user({stripeToken: "123"})
-        expect(User.first.customer_id).not_to be_nil
+        expect(User.first.customer_token).to eq("cus_443JMS8lUF8TE8")
       end
 
       it "makes the user follow the inviter, if invited" do

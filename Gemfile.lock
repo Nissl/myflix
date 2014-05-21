@@ -267,6 +267,9 @@ GEM
       json (~> 1.8.1)
       mime-types (~> 1.25)
       rest-client (~> 1.4)
+    stripe_event (1.1.0)
+      activesupport (>= 3.1)
+      stripe (~> 1.6)
     subexec (0.2.3)
     temple (0.6.7)
     thin (1.6.2)
@@ -283,6 +286,8 @@ GEM
     tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
+      json (>= 1.8.0)
+    ultrahook (0.1.2)
       json (>= 1.8.0)
     unicorn (4.8.2)
       kgio (~> 2.6)
@@ -342,8 +347,10 @@ DEPENDENCIES
   slim
   sprockets (= 2.11.0)
   stripe
+  stripe_event
   thin
   uglifier
+  ultrahook
   unicorn
   vcr
   webmock

@@ -23,8 +23,10 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 gem 'stripe'
+gem 'stripe_event'
 gem 'figaro', '>= 1.0.0.rc1'
 gem 'draper'
+gem 'ultrahook'
 
 group :development do
   gem 'pry'

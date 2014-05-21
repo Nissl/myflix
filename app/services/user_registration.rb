@@ -13,7 +13,7 @@ class UserRegistration
         :user => @user
       )
       if customer.created?
-        @user.customer_id = customer.stripe_id
+        @user.customer_token = customer.customer_token
         @user.save
         handle_invitation(params[:invitation_token])
         AppMailer.registration_email(@user).deliver

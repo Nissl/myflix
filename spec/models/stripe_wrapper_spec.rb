@@ -22,6 +22,7 @@ describe StripeWrapper, vcr: true do
       }
     ).id
   end
+
   describe StripeWrapper::Charge do
     describe ".create" do
       context "with valid card" do
@@ -65,6 +66,16 @@ describe StripeWrapper, vcr: true do
             user: alice
           )
           expect(customer.created?).to be_true
+        end
+
+        it "returns the customer token" do
+          alice = Fabricate.build(:user)
+          customer = StripeWrapper::Customer.create(
+            amount: 300, 
+            card: token, 
+            user: alice
+          )
+          expect(customer.customer_token).to be_present
         end
       end
 
