@@ -44,7 +44,7 @@ describe SessionsController do
       it "flashes an error message indicating that the account is locked" do
         alice = Fabricate(:user, account_active: false)
         post :create, email: alice.email, password: alice.password
-        expect(flash[:danger]).to eq("Your account has been locked.")
+        expect(flash[:danger]).to eq("Sorry, your account has been deactivated, please contact customer service.")
       end
       
       it_behaves_like "requires login" do

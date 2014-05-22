@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:success] = "Welcome, #{user.full_name}!"
       redirect_to home_path
     elsif user && user.account_active? == false
-      flash[:danger] = "Your account has been locked."
+      flash[:danger] = "Sorry, your account has been deactivated, please contact customer service."
       redirect_to login_path
     else
       flash[:danger] = "Something was wrong with the email or password you "\

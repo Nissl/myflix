@@ -16,4 +16,11 @@ feature "User logs in" do
     expect(page).to have_content %{Something was wrong with the email or 
                                   password you entered. Please try again.}
   end
+
+  scenario "with a deactivated account" do
+    alice = Fabricate(:deactivated_user)
+    visit login_path
+    sign_in_user(alice)
+    expect(page).to have_content "Sorry, your account has been deactivated, please contact customer service."
+  end
 end
