@@ -1,5 +1,6 @@
 shared_examples "requires login" do
   it "redirects to login path" do
+    user.save if user
     action
     expect(response).to redirect_to login_path
   end

@@ -14,6 +14,7 @@ class UserRegistration
       )
       if customer.created?
         @user.customer_token = customer.customer_token
+        @user.account_active = true
         @user.save
         handle_invitation(params[:invitation_token])
         AppMailer.registration_email(@user).deliver

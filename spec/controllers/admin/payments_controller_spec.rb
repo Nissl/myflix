@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::PaymentsController do
   describe "GET index" do
     it_behaves_like "requires login" do
+      let(:user) { Fabricate(:user) }
       let(:action) { get :index }
     end
 

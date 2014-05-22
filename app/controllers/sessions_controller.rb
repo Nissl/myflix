@@ -5,10 +5,13 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    if user && user.authenticate(params[:password]) && user.account_active?
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.full_name}!"
       redirect_to home_path
+    elsif user && user.account_active? == false
+      flash[:danger] = "Your account has been locked."
+      redirect_to login_path
     else
       flash[:danger] = "Something was wrong with the email or password you "\
                        "entered. Please try again."

@@ -13,6 +13,7 @@ describe InvitationsController do
     end
 
     it_behaves_like "requires login" do
+      let(:user) { Fabricate(:user) }
       let(:action) { get :new }
     end
   end 
@@ -124,6 +125,7 @@ describe InvitationsController do
     end
 
     it_behaves_like "requires login" do
+      let(:user) { Fabricate(:user) }
       let(:action) { post :create }
     end
   end

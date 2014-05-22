@@ -105,6 +105,7 @@ describe UsersController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { User.find(2) }
         let(:action) { get :show, id: User.find(2).id }   
       end
     end

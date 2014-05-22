@@ -1,0 +1,56 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "charge.failed",
+  "object": "event",
+  "request": null,
+  "data": {
+    "object": {
+      "id": "ch_00000000000000",
+      "object": "charge",
+      "created": 1400711555,
+      "livemode": false,
+      "paid": false,
+      "amount": 999,
+      "currency": "usd",
+      "refunded": false,
+      "card": {
+        "id": "card_00000000000000",
+        "object": "card",
+        "last4": "0002",
+        "type": "Visa",
+        "exp_month": 10,
+        "exp_year": 2014,
+        "fingerprint": "AqqpJ0BRHI6sc19k",
+        "country": "US",
+        "name": null,
+        "address_line1": null,
+        "address_line2": null,
+        "address_city": null,
+        "address_state": null,
+        "address_zip": null,
+        "address_country": null,
+        "cvc_check": "pass",
+        "address_line1_check": null,
+        "address_zip_check": null,
+        "customer": "cus_123"
+      },
+      "captured": false,
+      "refunds": [
+
+      ],
+      "balance_transaction": "txn_00000000000000",
+      "failure_message": "Your card was declined.",
+      "failure_code": "card_declined",
+      "amount_refunded": 0,
+      "customer": null,
+      "invoice": null,
+      "description": null,
+      "dispute": null,
+      "metadata": {
+      },
+      "statement_description": null
+    }
+  }
+}
