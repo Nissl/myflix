@@ -31,40 +31,39 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 14 May 2014 19:46:21 GMT
+      - Thu, 22 May 2014 22:29:27 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '570'
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Cache-Control:
-      - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Max-Age:
       - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "tok_1042Ck4XNy2YPdws3y7aySBY",
+          "id": "tok_1045FB4XNy2YPdwsWNWtXm18",
           "livemode": false,
-          "created": 1400096781,
+          "created": 1400797767,
           "used": false,
           "object": "token",
           "type": "card",
           "card": {
-            "id": "card_1042Ck4XNy2YPdwsneY4co1B",
+            "id": "card_1045FB4XNy2YPdwsvWbJdDNX",
             "object": "card",
             "last4": "0002",
             "type": "Visa",
             "exp_month": 3,
             "exp_year": 2020,
             "fingerprint": "AqqpJ0BRHI6sc19k",
-            "customer": null,
             "country": "US",
             "name": null,
             "address_line1": null,
@@ -72,17 +71,18 @@ http_interactions:
             "address_city": null,
             "address_state": null,
             "address_zip": null,
-            "address_country": null
+            "address_country": null,
+            "customer": null
           }
         }
     http_version: 
-  recorded_at: Wed, 14 May 2014 19:46:20 GMT
+  recorded_at: Thu, 22 May 2014 22:29:27 GMT
 - request:
     method: post
     uri: https://api.stripe.com/v1/charges
     body:
       encoding: US-ASCII
-      string: amount=300&currency=usd&card=tok_1042Ck4XNy2YPdws3y7aySBY
+      string: amount=300&currency=usd&card=tok_1045FB4XNy2YPdwsWNWtXm18
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -108,17 +108,17 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 14 May 2014 19:46:21 GMT
+      - Thu, 22 May 2014 22:29:27 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
       - '162'
-      Cache-Control:
-      - no-cache, no-store
-      Access-Control-Max-Age:
-      - '300'
       Access-Control-Allow-Credentials:
       - 'true'
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
       Strict-Transport-Security:
@@ -131,9 +131,9 @@ http_interactions:
             "message": "Your card was declined.",
             "type": "card_error",
             "code": "card_declined",
-            "charge": "ch_1042Ck4XNy2YPdwsslf6GI3r"
+            "charge": "ch_1045FB4XNy2YPdwsZPQeSPCz"
           }
         }
     http_version: 
-  recorded_at: Wed, 14 May 2014 19:46:21 GMT
+  recorded_at: Thu, 22 May 2014 22:29:27 GMT
 recorded_with: VCR 2.9.0

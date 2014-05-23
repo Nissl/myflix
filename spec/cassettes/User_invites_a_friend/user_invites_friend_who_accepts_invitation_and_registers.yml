@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.stripe.com/v1/charges
+    uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: amount=999&currency=usd&card=tok_1042Ci4XNy2YPdws2B4UDeA6&description=Sign%20up%20charge%20for%20osbaldo%40spencer.org
+      string: card=tok_1045FB4XNy2YPdwsiR87Okk9&email=lyda%40denesik.biz&plan=basic
     headers:
       Accept:
       - '*/*; q=0.5, application/xml'
@@ -22,7 +22,7 @@ http_interactions:
         johns-air 13.1.0 Darwin Kernel Version 13.1.0: Wed Apr  2 23:52:02 PDT 2014;
         root:xnu-2422.92.1~2/RELEASE_X86_64 x86_64"}'
       Content-Length:
-      - '118'
+      - '69'
   response:
     status:
       code: 200
@@ -31,67 +31,107 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 14 May 2014 19:44:52 GMT
+      - Thu, 22 May 2014 22:29:52 GMT
       Content-Type:
       - application/json;charset=utf-8
       Content-Length:
-      - '1036'
+      - '2187'
+      Access-Control-Allow-Credentials:
+      - 'true'
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Access-Control-Allow-Methods:
       - GET, POST, HEAD, OPTIONS, DELETE
-      Access-Control-Allow-Credentials:
-      - 'true'
       Strict-Transport-Security:
       - max-age=31556926; includeSubDomains
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "ch_1042Ci4XNy2YPdwsiVu5ALky",
-          "object": "charge",
-          "created": 1400096692,
+          "object": "customer",
+          "created": 1400797792,
+          "id": "cus_45FBvOCWgPfhz9",
           "livemode": false,
-          "paid": true,
-          "amount": 999,
-          "currency": "usd",
-          "refunded": false,
-          "card": {
-            "id": "card_1042Ci4XNy2YPdwsMUysnMVy",
-            "object": "card",
-            "last4": "4242",
-            "type": "Visa",
-            "exp_month": 6,
-            "exp_year": 2017,
-            "fingerprint": "Y6WJ0n1gVFVTeAgP",
-            "customer": null,
-            "country": "US",
-            "name": null,
-            "address_line1": null,
-            "address_line2": null,
-            "address_city": null,
-            "address_state": null,
-            "address_zip": null,
-            "address_country": null,
-            "cvc_check": "pass",
-            "address_line1_check": null,
-            "address_zip_check": null
-          },
-          "captured": true,
-          "refunds": [],
-          "balance_transaction": "txn_1042Ci4XNy2YPdwsoFwch2o1",
-          "failure_message": null,
-          "failure_code": null,
-          "amount_refunded": 0,
-          "customer": null,
-          "invoice": null,
-          "description": "Sign up charge for osbaldo@spencer.org",
-          "dispute": null,
+          "description": null,
+          "email": "lyda@denesik.biz",
+          "delinquent": false,
           "metadata": {},
-          "statement_description": null
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_45FBvOCWgPfhz9/subscriptions",
+            "data": [
+              {
+                "id": "sub_45FBBCmzeupnRV",
+                "plan": {
+                  "interval": "month",
+                  "name": "Basic Myflix Plan",
+                  "created": 1400521071,
+                  "amount": 999,
+                  "currency": "usd",
+                  "id": "basic",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_description": null
+                },
+                "object": "subscription",
+                "start": 1400797792,
+                "status": "active",
+                "customer": "cus_45FBvOCWgPfhz9",
+                "cancel_at_period_end": false,
+                "current_period_start": 1400797792,
+                "current_period_end": 1403476192,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_45FBvOCWgPfhz9/cards",
+            "data": [
+              {
+                "id": "card_1045FB4XNy2YPdws3TIlc3bm",
+                "object": "card",
+                "last4": "4242",
+                "type": "Visa",
+                "exp_month": 6,
+                "exp_year": 2017,
+                "fingerprint": "Y6WJ0n1gVFVTeAgP",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_45FBvOCWgPfhz9"
+              }
+            ]
+          },
+          "default_card": "card_1045FB4XNy2YPdws3TIlc3bm"
         }
     http_version: 
-  recorded_at: Wed, 14 May 2014 19:44:52 GMT
+  recorded_at: Thu, 22 May 2014 22:29:52 GMT
 recorded_with: VCR 2.9.0

@@ -69,41 +69,6 @@ feature 'User registers', { js: true, vcr: true } do
   end
 end
 
-def fill_in_user_info(user)
-  fill_in "Full Name", with: user.full_name
-  fill_in "Password", with: user.password
-  fill_in "Email Address", with: user.email
-end
-
-def fill_in_valid_credit_card_info
-  fill_in "Credit Card Number", with: "4242424242424242"
-  fill_in "Security Code", with: "123"
-  select "6 - June", from: "date_month"
-  select "2017", from: "date_year"
-end
-
-def fill_in_invalid_credit_card_info
-  fill_in "Credit Card Number", with: "123"
-  fill_in "Security Code", with: "123"
-  select "6 - June", from: "date_month"
-  select "2017", from: "date_year"
-end
-
-def fill_in_declined_credit_card_info
-  fill_in "Credit Card Number", with: "4000000000000002"
-  fill_in "Security Code", with: "123"
-  select "6 - June", from: "date_month"
-  select "2017", from: "date_year"
-end
-
-def click_register
-  click_button "Register"
-end
-
-def confirm_successful_registration(user)
-  expect(page).to have_content("You registered! Welcome, #{user.full_name}!")
-end
-
 def confirm_rejection_for_invalid_card 
   expect(page).to have_content("This card number looks invalid")
 end

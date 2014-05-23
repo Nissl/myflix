@@ -1,5 +1,4 @@
 class VideosController < AuthenticatedController
-  #decorates_assigned :video
 
   def index
     @categories = Category.all

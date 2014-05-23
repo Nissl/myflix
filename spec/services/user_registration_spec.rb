@@ -6,14 +6,20 @@ describe UserRegistration do
     
     context "card is valid" do
       before do
-        charge = double(:charge, successful?: true)
-        StripeWrapper::Charge.stub(:create).and_return(charge)
+        customer = double(:customer, created?: true, customer_token: "cus_443JMS8lUF8TE8")
+        StripeWrapper::Customer.stub(:create).and_return(customer)
       end
 
       it "creates a new user" do
         alice = Fabricate.build(:user)
         UserRegistration.new(alice).register_user({stripeToken: "123"})
         expect(User.count).to eq(1)
+      end
+
+      it "saves the user's Stripe customer token" do
+        alice = Fabricate.build(:user)
+        UserRegistration.new(alice).register_user({stripeToken: "123"})
+        expect(User.first.customer_token).to eq("cus_443JMS8lUF8TE8")
       end
 
       it "makes the user follow the inviter, if invited" do
@@ -24,7 +30,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                 stripeToken: "123"})
+                                                  stripeToken: "123"})
         expect(bob.follows?(alice)).to be_true
       end 
 
@@ -36,7 +42,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                 stripeToken: "123"})
+                                                  stripeToken: "123"})
         expect(alice.follows?(bob)).to be_true
       end
 
@@ -48,7 +54,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                 stripeToken: "123"})
+                                                  stripeToken: "123"})
         expect(invitation.reload.token).to be_nil
       end
 
@@ -75,10 +81,10 @@ describe UserRegistration do
 
     context "card is not valid" do
       before do
-        charge = double(:charge, 
-                        successful?: false, 
-                        error_message: "Your card was declined.")
-        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        customer = double(:customer, 
+                          created?: false, 
+                          error_message: "Your card was declined.")
+        StripeWrapper::Customer.should_receive(:create).and_return(customer)
       end
 
       it "does not create a new user" do
@@ -101,7 +107,7 @@ describe UserRegistration do
                                recipient_name: bob.full_name,
                                inviter_id: alice.id)
         UserRegistration.new(bob).register_user({invitation_token: invitation.token, 
-                                                 stripeToken: "123"})
+                                                  stripeToken: "123"})
         expect(invitation.reload.token).to_not be_nil
       end
 

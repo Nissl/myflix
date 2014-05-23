@@ -33,6 +33,7 @@ describe RelationshipsController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { get :index }
       end
     end
@@ -139,6 +140,7 @@ describe RelationshipsController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { post :create, leader_id: 2 }
       end
     end
@@ -226,6 +228,7 @@ describe RelationshipsController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { post :destroy, id: 1 }
       end
     end

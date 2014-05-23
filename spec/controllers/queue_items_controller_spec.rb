@@ -30,6 +30,7 @@ describe QueueItemsController do
       end
       
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { get :index }
       end
     end
@@ -84,6 +85,7 @@ describe QueueItemsController do
       end
       
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { fabricate_video_and_post_to_create }
       end
     end
@@ -137,6 +139,7 @@ describe QueueItemsController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { delete :destroy, id: 1 }
       end
     end
@@ -228,6 +231,7 @@ describe QueueItemsController do
       end
 
       it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user) }
         let(:action) { post :update_queue, queue_items: [{id: "1", position: "3"}, 
                                           {id: "2", position: "2"}, 
                                           {id: "3", position: "1"}] }

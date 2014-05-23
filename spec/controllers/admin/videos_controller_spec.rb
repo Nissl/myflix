@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::VideosController do
   describe "GET new" do
     it_behaves_like "requires login" do
+      let(:user) { Fabricate(:user) }
       let(:action) { get :new }
     end
 
@@ -20,6 +21,7 @@ describe Admin::VideosController do
 
   describe "POST create" do
     it_behaves_like "requires login" do
+      let(:user) { Fabricate(:user) }
       let(:action) { post :create }      
     end
 

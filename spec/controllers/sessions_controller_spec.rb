@@ -15,7 +15,7 @@ describe SessionsController do
   end
 
   describe "POST create" do
-    context "with valid login credentials" do
+    context "with valid login credentials, active account" do
       before do
         alice = Fabricate(:user)
         post :create, email: alice.email, password: alice.password
@@ -34,6 +34,25 @@ describe SessionsController do
       end
     end
 
+    context "with valid login credentials, locked account" do
+      it "does not put the user into the session" do
+        alice = Fabricate(:user, account_active: false)
+        post :create, email: alice.email, password: alice.password
+        expect(session[:user_id]).to be_nil
+      end
+
+      it "flashes an error message indicating that the account is locked" do
+        alice = Fabricate(:user, account_active: false)
+        post :create, email: alice.email, password: alice.password
+        expect(flash[:danger]).to eq("Sorry, your account has been deactivated, please contact customer service.")
+      end
+      
+      it_behaves_like "requires login" do
+        let(:user) { Fabricate(:user, account_active: false) }
+        let(:action) { post :create, email: user.email, password: user.password } 
+      end
+    end
+
     context "with invalid login credentials" do
       it "does not put the user into the session" do
         alice = Fabricate(:user)
@@ -49,8 +68,8 @@ describe SessionsController do
       end
 
       it_behaves_like "requires login" do
-        alice = Fabricate(:user)
-        let(:action) { post :create, email: alice.email, password: alice.password + "asdfsakd" } 
+        let(:user) { Fabricate(:user) }
+        let(:action) { post :create, email: user.email, password: user.password + "asdfsakd" } 
       end
     end
   end

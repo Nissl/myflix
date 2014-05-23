@@ -13,4 +13,9 @@ class AppMailer < ActionMailer::Base
     @invitation = invitation
     mail from: 'info@myflixapp.com', to: invitation.recipient_email, subject: "#{invitation.inviter.full_name} has invited you to join MyFlix!"
   end
+
+  def locked_account_email(user)
+    @user = user
+    mail from: 'info@myflixapp.com', to: user.email, subject: "Account Locked"
+  end
 end
