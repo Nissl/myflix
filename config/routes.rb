@@ -3,11 +3,13 @@ require 'sidekiq/web'
 Myflix::Application.routes.draw do
   root to: 'pages#front'
   get 'ui(/:action)', controller: 'ui'
+
   get 'home', to: 'videos#index'
   get 'register', to: 'users#new'
   get 'register/:token', to: 'users#new_with_invitation_token', as: 'register_with_token'
   get 'login', to: 'sessions#new'
   get 'logout', to: 'sessions#destroy'
+  
   get 'my_queue', to: 'queue_items#index'
   post 'update_queue', to: 'queue_items#update_queue'
   get 'people', to: 'relationships#index'
@@ -21,6 +23,7 @@ Myflix::Application.routes.draw do
     end
     resources :reviews, only: [:create]
   end
+
   resources :categories, only: [:show]
   resources :users, only: [:create, :show]
   resources :sessions, only: [:create]
